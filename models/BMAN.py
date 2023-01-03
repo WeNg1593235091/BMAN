@@ -103,7 +103,7 @@ class BMAN(nn.Module):
         return torch.mean((pred.view(-1) == label.view(-1)).float())
     #上下文编码器
     def context_encoder(self, input):
-        input_mask = (input['mask'] != 0).float()  #float() 函数用于将整数和字符串转换成浮点数。
+        input_mask = (input['mask'] != 0).float()  # float() 函数用于将整数和字符串转换成浮点数。
         '''
         sum(1)求数组中每一行的和
         max() 方法返回给定参数的最大值，参数可以为序列。
@@ -120,12 +120,12 @@ class BMAN(nn.Module):
         '''
         unsqueeze(i)表示用一个箱子把第i层的箱子都包起来；
         而squeeze(i)表示把第i层的箱子去掉（第i层只有一个箱子时才能用这个函数）
-        
+
         '''
         conv_out = self.conv(embedding_.unsqueeze(1)).squeeze(3)
-        conv_out = conv_out * input_mask.unsqueeze(1)#运算符*在矩阵运算中的功能是逐元素的乘法（称为Hadamard积（Hadamard product，数学符号⊙））。
+        conv_out = conv_out * input_mask.unsqueeze(1)  # 运算符*在矩阵运算中的功能是逐元素的乘法（称为Hadamard积（Hadamard product，数学符号⊙））。
 
-        return conv_out.transpose(1,2).contiguous(), input_mask, max_length
+        return conv_out.transpose(1, 2).contiguous(), input_mask, max_length
 
     def lstm_encoder(self, input, mask, lstm):#enhance_support, support_mask, self.lstm_enhance
         if self.drop:
